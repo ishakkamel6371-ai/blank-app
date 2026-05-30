@@ -1,23 +1,23 @@
-import streamlit as 
+
 import streamlit as st
 from google import genai
 from PIL import Image
 
-# إعدادات الواجهة
+# 1. إعداد واجهة التطبيق باللغة العربية
 st.set_page_config(page_title="محلل الأسهم الذكي", page_icon="📈", layout="centered")
 
 st.title("📈 مستشارك المالي الذكي")
 st.write("ارفع لقطة شاشة (Screenshot) للمنحنى البياني من تطبيق ثاندر لتبدأ التحليل الفني فوراً.")
 
-# خانة إدخال مفتاح الـ API لـ Gemini
+# 2. خانة إدخال مفتاح الـ API
 api_key = st.text_input("🔑 أدخل مفتاح Gemini API الخاص بك:", type="password")
 
 if api_key:
     try:
-        # ربط التطبيق بذكاء Gemini الاصطناعي
+        # ربط التطبيق بذكاء Gemini
         client = genai.Client(api_key=api_key)
         
-        # خانة رفع الصور
+        # 3. أزرار الرفع باللغة العربية
         uploaded_file = st.file_uploader("📸 اختر صورة المنحنى من الاستوديو:", type=["jpg", "jpeg", "png"])
         
         if uploaded_file is not None:
@@ -26,12 +26,13 @@ if api_key:
             
             if st.button("🧐 ابدأ التحليل الفني الآن"):
                 with st.spinner("جاري قراءة المنحنى وتحليله بواسطة الذكاء الاصطناعي..."):
+                    # أمر التحليل الفني باللغة العربية
                     prompt = (
                         "أنت محلل فني خبير ومستشار مالي لأسواق الأسهم. انظر إلى صورة المنحنى البياني المرفقة "
                         "(من تطبيق تداول الأسهم ثاندر)، وحلل حركة السعر الموضحة. حدد اتجاه السهم الحالي (صاعد/هابط/عرضي)، "
-                        "واستخرج نقاط الدعم والمقاومة التقريبية، ثم قدم توصية استثمارية واضحة ومبسطة للمبتدئين (شراء / بيع / انتظار) مع ذكر الأسباب."
+                        "واستخرج نقاط الدعم والمقاومة التقريبية، ثم قدم توصية استثمارية واضحة ومبسطة للمبتدئين (شراء / بيع / انتظار) مع ذكر الأسباب باللغة العربية."
                     )
-                    # توليد التقرير
+                    # توليد التقرير العربي
                     response = client.models.generate_content(model='gemini-2.5-flash', contents=[prompt, image])
                     st.subheader("🤖 تقرير الخبير الذكي:")
                     st.markdown(response.text)
